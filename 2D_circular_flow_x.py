@@ -98,7 +98,7 @@ topology, cell_types, x = create_vtk_mesh(domain, 2)
 grid = pyvista.UnstructuredGrid(topology, cell_types, x)
 
 grid.point_data["u"] = uh.x.array
-warped = grid.warp_by_scalar("u", factor=25)
+warped = grid.warp_by_scalar("u", factor=10)
 plotter = pyvista.Plotter()
 plotter.background_color = "white"
 plotter.add_mesh(warped, show_edges=False, show_scalar_bar=False, scalars="u")
