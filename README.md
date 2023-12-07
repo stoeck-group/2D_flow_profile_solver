@@ -2,9 +2,25 @@
 
 2D_flow_profile_solver is a 2D finite element solver to simulate fully developed laminar flow through arbitrarily shaped microchannels. The solver takes an image of the inlet boundary geometry and a flow rate ratio of the inner and outer flow as inputs, creating the velocity profile of the fully developed laminar low as output. 
 
-# How to set up and install dependencies (e.g., FENicSx, numpy.)
-  Prerequisites
-  Installations
+# How to set up and install dependencies
+
+There are several Python libraries need to run this code:
+* FEniCSx (which includes mpich and pyvist Python libraries)
+* gmsh
+* numpy
+
+We recommend installing the required finite element library FEniCSx in a new environment through Anaconda:
+
+```
+conda create -n fenicsx-env
+conda activate fenicsx-env
+conda install -c conda-forge fenics-dolfinx mpich pyvista
+```
+
+Inside this environment, install the following packages:
+```
+pip install gmsh numpy
+```
 
 # How to use 
 
