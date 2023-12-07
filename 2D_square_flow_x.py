@@ -19,8 +19,8 @@ membrane = gmsh.model.occ.addRectangle(0, 0, 0, 1, 1)
 gmsh.model.occ.synchronize()
 gdim = 2
 gmsh.model.addPhysicalGroup(gdim, [membrane], 1)
-gmsh.option.setNumber("Mesh.CharacteristicLengthMin",0.001)
-gmsh.option.setNumber("Mesh.CharacteristicLengthMax",0.001)
+gmsh.option.setNumber("Mesh.CharacteristicLengthMin",0.01)
+gmsh.option.setNumber("Mesh.CharacteristicLengthMax",0.01)
 gmsh.model.mesh.generate(gdim)
 
 
@@ -84,7 +84,7 @@ grid = pyvista.UnstructuredGrid(topology, cell_types, x)
 
 # Set deflection values and add it to plotter
 grid.point_data["u"] = uh.x.array
-warped = grid.warp_by_scalar("u", factor=25)
+warped = grid.warp_by_scalar("u", factor=10)
 plotter = pyvista.Plotter()
 plotter.background_color = "white"
 plotter.add_mesh(warped, show_edges=False, show_scalar_bar=False, scalars="u")
