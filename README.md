@@ -8,6 +8,10 @@ There are several Python libraries need to run this code:
 * FEniCSx (which includes mpich and pyvist Python libraries)
 * gmsh
 * numpy
+* scipy
+* rdp
+* scikit-image
+* matplotlib
 
 We recommend installing the required finite element library FEniCSx in a new environment through Anaconda:
 
@@ -19,7 +23,7 @@ conda install -c conda-forge fenics-dolfinx mpich pyvista
 
 Inside this environment, install the following packages:
 ```
-pip install gmsh numpy
+pip install gmsh numpy scipy rdp scikit-image matplotlib
 ```
 
 # How to use 
