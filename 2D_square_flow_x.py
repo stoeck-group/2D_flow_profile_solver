@@ -1,19 +1,16 @@
 #!/usr/bin/env python                                                                                                                                                
-"""
-FenicsX !!!
-"""
-"""
-FEniCS tutorial demo program: Deflection of a membrane.
-
-  -Laplace(w) = p  in the unit circle
-            w = 0  on the boundary
-
-The load p is a Gaussian function centered at (0, 0.6).
-"""
-
+import gmsh
+from dolfinx.io import gmshio
+from dolfinx import fem
+from mpi4py import MPI
+import ufl
+from petsc4py.PETSc import ScalarType
+import numpy as np
+from dolfinx.plot import create_vtk_mesh
+import pyvista
 
 # Create mesh
-import gmsh
+
 gmsh.initialize()
 membrane = gmsh.model.occ.addRectangle(0, 0, 0, 1, 1)
 gmsh.model.occ.synchronize()
@@ -25,20 +22,17 @@ gmsh.model.mesh.generate(gdim)
 
 
 # Interfacing with GMSH in DOLFINx
-from dolfinx.io import gmshio
-from mpi4py import MPI
+
 
 gmsh_model_rank = 0
 mesh_comm = MPI.COMM_WORLD
 domain, cell_markers, facet_markers = gmshio.model_to_mesh(gmsh.model, mesh_comm, gmsh_model_rank, gdim=gdim)
 
-from dolfinx import fem
 V = fem.FunctionSpace(domain, ("CG", 1))
 
 
 # Defining a spatially varying load
-import ufl
-from petsc4py.PETSc import ScalarType
+
 x = ufl.SpatialCoordinate(domain)
 miu = 10
 dpdz = 10
@@ -47,7 +41,7 @@ p = 1
 
 
 # Creating a Dirichlet b.c. using geometrical conditions
-import numpy as np
+
 def on_boundary(x):
     return np.isclose(x[0],1) | np.isclose(x[0],0) | np.isclose(x[1],1) | np.isclose(x[1],0)
 boundary_dofs = fem.locate_dofs_geometrical(V, on_boundary)
@@ -74,8 +68,7 @@ uh = problem.solve()
 
 
 # Plot solution
-from dolfinx.plot import create_vtk_mesh
-import pyvista
+
 #pyvista.start_xvfb()
 
 # Extract topology from mesh and create pyvista mesh
